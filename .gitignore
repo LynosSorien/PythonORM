@@ -1,0 +1,4 @@
+.idea
+target/
+generated/
+.DS_Store
