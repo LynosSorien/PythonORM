@@ -1,5 +1,5 @@
+from sqlalchemy import Column, Integer, String, Sequence
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, Sequence, Boolean, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -36,6 +36,7 @@ def print_values(results):
 
 def insert_element(name, specie):
     session.add(ORMAnimal(name=name, specie=specie))
+    session.commit()
 
 def find_by_id(id):
     return session.query(ORMAnimal).filter_by(id=id).one()
@@ -47,10 +48,7 @@ for element in query.all():
 query = session.query(ORMAnimal).filter(ORMAnimal.specie.like('%ni%')).order_by(ORMAnimal.specie)
 print_values(query.all())
 
-query = session.query(ORMAnimal).filter(ORMAnimal.specie.like('%ni%')).order_by(ORMAnimal.specie)
-#print("ORM Values ONE! ", query.one())
-
-session.add(ORMAnimal(id=3, name="Squirrel", specie="Sciurinae"))
+insert_element("Squirrel", "Sciurinae")
 query = session.query(ORMAnimal)
 print_values(query.all())
 
